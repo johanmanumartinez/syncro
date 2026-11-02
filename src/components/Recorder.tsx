@@ -177,13 +177,14 @@ export default function Recorder() {
       return;
     }
 
-    streamRef.current = stream;
+    // Countdown ANTES de iniciar la captura para que no quede grabado.
     setPhase("countdown");
     for (let i = 3; i > 0; i--) {
       setCount(i);
       await new Promise((r) => setTimeout(r, 1000));
     }
 
+    streamRef.current = stream;
     chunksRef.current = [];
     const mimeType = pickMimeType();
     const rec = new MediaRecorder(stream, mimeType ? { mimeType, videoBitsPerSecond: 3_000_000 } : undefined);
